@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<article style="max-width: 500px; margin: auto;">
+    <h2>Create an Account</h2>
+    <form method="POST">
+        <label>Email Address</label>
+        <input type="email" name="email" required>
+        <label>Password</label>
+        <input type="password" name="password" required>
+        <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="/login">Login here</a></p>
+</article>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="grid">
+    <!-- Left Column: Add Pet Form -->
+    <section>
+        <h2>Register a Pet</h2>
+        <form action="/pet/add" method="POST">
+            <input type="text" name="name" placeholder="Pet's Name" required>
+            <input type="text" name="species" placeholder="Species (e.g., Golden Retriever, Siamese Cat)" required>
+            <input type="number" name="age" placeholder="Age (in years)" required>
+            <input type="text" name="diet" placeholder="Diet/Food details" required>
+            <button type="submit">Analyze with AI & Save</button>
+        </form>
+    </section>
+
+    <!-- Right Column: Pet List & Saved Details -->
+    <section>
+        <h2>Your Saved Pets</h2>
+        {% if not pets %}
+            <p>No pets tracked yet. Add your first one to generate AI advice!</p>
+        {% endif %}
+        
+        {% for pet_id, pet in pets.items() %}
+        <article>
+            <header>
+                <h3 style="margin:0;">🐾 {{ pet.name }}</h3>
+                <small>{{ pet.species }} — {{ pet.age }} years old</small>
+            </header>
+            
+            <p><strong>Dietary plan:</strong> {{ pet.diet }}</p>
+            
+            <div style="background: #1a242f; padding: 10px; border-radius: 6px; margin-bottom: 15px;">
+                <h5 style="margin:0 0 5px 0; font-size:0.9rem; color:#ffd700;">✨ Gemini AI Core Care Recommendations:</h5>
+                <p style="font-size:0.85rem; white-space: pre-wrap; margin:0;">{{ pet.ai_tips }}</p>
+            </div>
+
+            <!-- Inline Quick Edit and Delete Actions -->
+            <details>
+                <summary class="secondary" style="font-size:0.8rem; padding:2px 8px;">Edit Options</summary>
+                <form action="/pet/edit/{{ pet_id }}" method="POST" style="margin-top:10px;">
+                    <div class="grid">
+                        <input type="text" name="name" value="{{ pet.name }}" required>
+                        <input type="text" name="species" value="{{ pet.species }}" required>
+                    </div>
+                    <div class="grid">
+                        <input type="number" name="age" value="{{ pet.age }}" required>
+                        <input type="text" name="diet" value="{{ pet.diet }}" required>
+                    </div>
+                    <button type="submit" class="contrast">Save Edits</button>
+                </form>
+                <a href="/pet/delete/{{ pet_id }}" style="color:#d9383a; font-size:0.85rem;" onclick="return confirm('Remove this pet?');">❌ Delete Pet Entry</a>
+            </details>
+        </article>
+        {% endfor %}
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Account Settings</h2>
+<article>
+    <p>Logged in as: <strong>{{ email }}</strong></p>
+    <hr>
+    <h3 style="color: #d9383a;">Danger Zone</h3>
+    <p>Deleting your account will remove your profile and clear out all your saved pets forever.</p>
+    <form method="POST" onsubmit="return confirm('Are you absolutely sure you want to delete your entire account? This cannot be undone.');">
+        <input type="hidden" name="action" value="delete_account">
+        <button type="submit" style="background-color: #d9383a; border-color: #d9383a;">Delete Account Permanently</button>
+    </form>
+</article>
+{% endblock %}
